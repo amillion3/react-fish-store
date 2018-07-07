@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Route, BrowserRouter, Redirect, Switch} from 'react-router-dom';
-
 // import Fish from '../Components/Fish/Fish';
 import Home from '../Components/Home/Home';
 import Inventory from '../Components/Inventory/Inventory';
@@ -11,8 +10,9 @@ import Navbar from '../Components/Navbar/Navbar';
 // import OrderSpa from '../Components/OrderSpa/OrderSpa';
 import Register from '../Components/Register/Register';
 // import SingleOrder from '../Components/SingleOrder/SingleOrder';
-
+import fbConnection from '../firebaseRequests/connection';
 import './App.css';
+fbConnection();
 
 // helper function                   ...rest = any other components
 const PrivateRoute = ({ component: Component, authed, ...rest}) => {
