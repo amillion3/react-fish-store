@@ -6,4 +6,8 @@ const registerUser = user => {
   // no promise needed here
 };
 
-export default {registerUser};
+const loginUser = user => {
+  return firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+};
+
+export default {registerUser, loginUser};
