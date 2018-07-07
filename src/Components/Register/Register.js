@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import authRequests from '../../firebaseRequests/auth';
 import './Register.css';
 
 class Register extends React.Component {
@@ -11,7 +12,17 @@ class Register extends React.Component {
   }
 
   registerClickEvent = e => {
-
+    const {user} = this.state;
+    e.preventDefault();
+    authRequests
+      .registerUser(user)
+      .then(() => {
+        this.props.history.push('/orders');
+        // on successful registration, redirect user to 'orders' page
+      })
+      .catch(err => {
+        console.error('Error with registration', err);
+      });
   };
   emailChange = e => {
     const tempUser = {...this.state.user}; // makes a copy of .user
@@ -19,8 +30,8 @@ class Register extends React.Component {
     this.setState({user: tempUser});
   };
   passwordChange = e => {
-    const tempPass = {...this.state.password};
-    tempPass.pass = e.target.value;
+    const tempPass = {...this.state.user};
+    tempPass.password = e.target.value;
     this.setState({user: tempPass});
   };
 
