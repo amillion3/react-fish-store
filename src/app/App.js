@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Route, BrowserRouter, Redirect, Switch} from 'react-router-dom';
+import firebase from 'firebase';
 // import Fish from '../Components/Fish/Fish';
 import Home from '../Components/Home/Home';
 import Inventory from '../Components/Inventory/Inventory';
@@ -53,11 +54,28 @@ class App extends Component {
     authed: false,
   }
 
+  componentDidMount () {
+    this.removeListener = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({authed: true});
+      } else {
+        this.setState({authed: false});
+      }
+    });
+  }
+
+  // when a component refreshes
+  componentWillUnmount () {
+    this.removeListener();
+  }
+
   render () {
     return (
       <BrowserRouter>
         <div>
-          <Navbar />
+          <Navbar
+            authed={this.state.authed}
+          />
           <div className='container'>
             <div className='row'>
               <Switch>
