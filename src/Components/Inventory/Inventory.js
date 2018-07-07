@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './Inventory';
+import './Inventory.css';
 
 class Inventory extends React.Component {
   render () {
     return (
-      <div className='row Inventory'>
+      <div className='Inventory'>
         <h1>Inventory</h1>
       </div>
     );
