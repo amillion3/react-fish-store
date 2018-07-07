@@ -6,11 +6,10 @@ import Home from '../Components/Home/Home';
 import Inventory from '../Components/Inventory/Inventory';
 import Login from '../Components/Login/Login';
 import Navbar from '../Components/Navbar/Navbar';
-// import New from '../Components/New/New';
-// import Order from '../Components/Order/Order';
-// import OrderSpa from '../Components/OrderSpa/OrderSpa';
+import New from '../Components/New/New';
+import OrderSpa from '../Components/OrderSpa/OrderSpa';
 import Register from '../Components/Register/Register';
-// import SingleOrder from '../Components/SingleOrder/SingleOrder';
+import SingleOrder from '../Components/SingleOrder/SingleOrder';
 import fbConnection from '../firebaseRequests/connection';
 import './App.css';
 fbConnection();
@@ -69,12 +68,17 @@ class App extends Component {
     this.removeListener();
   }
 
+  runAway = () => {
+    this.setState({authed: false});
+  };
+
   render () {
     return (
       <BrowserRouter>
         <div>
           <Navbar
             authed={this.state.authed}
+            runAway={this.runAway}
           />
           <div className='container'>
             <div className='row'>
@@ -92,6 +96,18 @@ class App extends Component {
                   path='/login'
                   authed={this.state.authed}
                   component={Login} />
+                <PrivateRoute
+                  path='/orders'
+                  authed={this.state.authed}
+                  component={OrderSpa} />
+                <PrivateRoute
+                  path='/order/:id'
+                  authed={this.state.authed}
+                  component={SingleOrder} />
+                <PrivateRoute
+                  path='/new'
+                  authed={this.state.authed}
+                  component={New} />
               </Switch>
             </div>
           </div>
