@@ -3,7 +3,7 @@ import {Route, BrowserRouter, Redirect, Switch} from 'react-router-dom';
 // import Fish from '../Components/Fish/Fish';
 import Home from '../Components/Home/Home';
 import Inventory from '../Components/Inventory/Inventory';
-// import Login from '../Components/Login/Login';
+import Login from '../Components/Login/Login';
 import Navbar from '../Components/Navbar/Navbar';
 // import New from '../Components/New/New';
 // import Order from '../Components/Order/Order';
@@ -70,6 +70,10 @@ class App extends Component {
                   path='/register'
                   authed={this.state.authed}
                   component={Register} />
+                <PublicRoute
+                  path='/login'
+                  authed={this.state.authed}
+                  component={Login} />
               </Switch>
             </div>
           </div>
