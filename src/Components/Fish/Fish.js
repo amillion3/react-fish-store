@@ -5,7 +5,7 @@ import './Fish.css';
 class Fish extends React.Component {
   render () {
     return (
-      <div className='row Fish'>
+      <div className='Fish'>
         <h1>Fish</h1>
       </div>
     );
