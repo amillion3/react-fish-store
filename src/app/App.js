@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Route, BrowserRouter, Redirect, Switch} from 'react-router-dom';
 
 // import Fish from '../Components/Fish/Fish';
 import Home from '../Components/Home/Home';
-// import Inventory from '../Components/Inventory/Inventory';
+import Inventory from '../Components/Inventory/Inventory';
 // import Login from '../Components/Login/Login';
 import Navbar from '../Components/Navbar/Navbar';
 // import New from '../Components/New/New';
@@ -14,7 +14,28 @@ import Navbar from '../Components/Navbar/Navbar';
 
 import './App.css';
 
+// helper function                   ...rest = any other components
+const PrivateRoute = ({component: Component, authed, ...rest}) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authed === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{pathname: '/login', state: {from: props.location}}}
+          />
+        )
+      }
+    />
+  );
+};
 class App extends Component {
+  state = {
+    authed: false,
+  }
+
   render () {
     return (
       <BrowserRouter>
@@ -24,7 +45,10 @@ class App extends Component {
             <div className='row'>
               <Switch>
                 <Route path='/' exact component={Home}/>
-
+                <PrivateRoute
+                  path='/inventory'
+                  authed='this.state.authed'
+                  component={Inventory} />
               </Switch>
             </div>
           </div>
