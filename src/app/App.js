@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {Route, BrowserRouter, Redirect, Switch} from 'react-router-dom';
+import firebase from 'firebase';
 // import Fish from '../Components/Fish/Fish';
 import Home from '../Components/Home/Home';
 import Inventory from '../Components/Inventory/Inventory';
 import Login from '../Components/Login/Login';
 import Navbar from '../Components/Navbar/Navbar';
-// import New from '../Components/New/New';
-// import Order from '../Components/Order/Order';
-// import OrderSpa from '../Components/OrderSpa/OrderSpa';
+import New from '../Components/New/New';
+import OrderSpa from '../Components/OrderSpa/OrderSpa';
 import Register from '../Components/Register/Register';
-// import SingleOrder from '../Components/SingleOrder/SingleOrder';
+import SingleOrder from '../Components/SingleOrder/SingleOrder';
 import fbConnection from '../firebaseRequests/connection';
 import './App.css';
 fbConnection();
@@ -53,11 +53,33 @@ class App extends Component {
     authed: false,
   }
 
+  componentDidMount () {
+    this.removeListener = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({authed: true});
+      } else {
+        this.setState({authed: false});
+      }
+    });
+  }
+
+  // when a component refreshes
+  componentWillUnmount () {
+    this.removeListener();
+  }
+
+  runAway = () => {
+    this.setState({authed: false});
+  };
+
   render () {
     return (
       <BrowserRouter>
         <div>
-          <Navbar />
+          <Navbar
+            authed={this.state.authed}
+            runAway={this.runAway}
+          />
           <div className='container'>
             <div className='row'>
               <Switch>
@@ -74,6 +96,18 @@ class App extends Component {
                   path='/login'
                   authed={this.state.authed}
                   component={Login} />
+                <PrivateRoute
+                  path='/orders'
+                  authed={this.state.authed}
+                  component={OrderSpa} />
+                <PrivateRoute
+                  path='/order/:id'
+                  authed={this.state.authed}
+                  component={SingleOrder} />
+                <PrivateRoute
+                  path='/new'
+                  authed={this.state.authed}
+                  component={New} />
               </Switch>
             </div>
           </div>
