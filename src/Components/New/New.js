@@ -30,6 +30,15 @@ class New extends React.Component {
       });
   }
 
+  removeFromOrder = key => {
+    const newOrder = {...this.state.order};
+    // make a copy of the order
+    delete newOrder[key];
+    // call 'delete' method that matches the key passed in
+    this.setState({order: newOrder});
+    // update the state
+  };
+
   render () {
     const fishComponents = this.state.fishes.map((fish) => {
       return (
@@ -51,6 +60,7 @@ class New extends React.Component {
         <Order
           fishes={this.state.fishes}
           order={this.state.order}
+          removeFromOrder={this.removeFromOrder}
         />
       </div>
     );
