@@ -39,6 +39,10 @@ class New extends React.Component {
     // update the state
   };
 
+  saveNewOrder = () => {
+
+  }
+
   render () {
     const fishComponents = this.state.fishes.map((fish) => {
       return (
@@ -61,6 +65,7 @@ class New extends React.Component {
           fishes={this.state.fishes}
           order={this.state.order}
           removeFromOrder={this.removeFromOrder}
+          saveNewOrder={this.saveNewOrder}
         />
       </div>
     );
